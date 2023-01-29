@@ -215,15 +215,23 @@ function drawScene() {
   mat4.translate(mvMatrix, [-1.5, 0.0, -8.0]);
   mvPushMatrix();
   mat4.rotate(mvMatrix, degToRad(rPyramid), [0, 1, 0]);
+
   gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexPositionBuffer);
+
   gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, pyramidVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
   gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexColorBuffer);
+
   gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, pyramidVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
   setMatrixUniforms();
+  
   gl.drawArrays(gl.TRIANGLES, 0, pyramidVertexPositionBuffer.numItems);
+
   mvPopMatrix();
   mat4.translate(mvMatrix, [3.0, 0.0, 0.0]);
   mvPushMatrix();
+
   mat4.rotate(mvMatrix, degToRad(rCube), [1, 1, 1]);
   gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
   gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, cubeVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
@@ -234,6 +242,7 @@ function drawScene() {
   gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
   mvPopMatrix();
 }
+
 var lastTime = 0;
 function animate() {
   var timeNow = new Date().getTime();
