@@ -22,22 +22,24 @@ function initPositionBuffer(gl) {
 
   const positions = [
     // Front face
-    -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0,
-
-    // Back face
-    -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, -1.0,
-
-    // Top face
-    -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0,
-
-    // Bottom face
-    -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0,
+    0.0,  1.0,  0.0,
+    -1.0, -1.0,  1.0,
+    1.0, -1.0,  1.0,
 
     // Right face
-    1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0,
+    0.0,  1.0,  0.0,
+    1.0, -1.0,  1.0,
+    1.0, -1.0, -1.0,
+
+    // Back face
+    0.0,  1.0,  0.0,
+    1.0, -1.0, -1.0,
+    -1.0, -1.0, -1.0,
 
     // Left face
-    -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0,
+    0.0,  1.0,  0.0,
+    -1.0, -1.0, -1.0,
+    -1.0, -1.0,  1.0
   ];
 
   // Now pass the list of positions into WebGL to build the
@@ -51,11 +53,9 @@ function initPositionBuffer(gl) {
 function initColorBuffer(gl) {
   const faceColors = [
     [1.0, 1.0, 1.0, 1.0], // Front face: white
-    [1.0, 0.0, 0.0, 1.0], // Back face: red
-    [0.0, 1.0, 0.0, 1.0], // Top face: green
-    [0.0, 0.0, 1.0, 1.0], // Bottom face: blue
-    [1.0, 1.0, 0.0, 1.0], // Right face: yellow
-    [1.0, 0.0, 1.0, 1.0], // Left face: purple
+    [1.0, 0.0, 0.0, 1.0], // Right face: red
+    [0.0, 1.0, 0.0, 1.0], // Back face: green
+    [0.0, 0.0, 1.0, 1.0], // Left face: blue    
   ];
 
   // Convert the array of colors into a table for all the vertices.
