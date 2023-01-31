@@ -20,30 +20,40 @@ function initPositionBuffer(gl) {
   const sqrt = Math.sqrt;
 
   const top = [0.0, 2 * sqrt(6) / 3, 0.0];
-  const left = [-1.0, 0.0, sqrt(1 / 3)];
-  const right = [1.0, 0, sqrt(1 / 3)];
-  const back = [0.0, 0.0, -2 * sqrt(1 / 3)];
+  const left = [-1.0, 0.0, -sqrt(1 / 3)];
+  const right = [1.0, 0, -sqrt(1 / 3)];
+  const back = [0.0, 0.0, 2 * sqrt(1 / 3)];
 
+  // 顺时针，代表背面
+  // 逆时针，代表正面
   const positions = [
     // Front face
-    ...top,
-    ...left,
+    ...top,    
     ...right,
+    ...left,
+    
+    
 
     // Right face
+    
     ...top,
-    ...right,
     ...back,
+    ...right,
+    
 
     // left face
+    // 逆时针，代表正面
     ...top,
-    ...back,
     ...left,
+    ...back,
 
     // buttom face
-    ...left,
+    // 顺时针，代表背面
     ...back,
-    ...right
+    ...left,
+    ...right,
+    
+
   ];
 
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
@@ -53,23 +63,37 @@ function initPositionBuffer(gl) {
 
 // 颜色 Buffer
 function initColorBuffer(gl) {
+
+  const red = [1.0, 0.0, 0.0, 1.0];
+  const yellow = [0.0, 1.0, 0.0, 1.0];
+  const blue = [0.0, 0.0, 1.0, 1.0];
+  const white = [1.0, 1.0, 1.0, 1.0];
   const faceColors = [
     // Front face
-    1.0, 0.0, 0.0, 1.0,
-    0.0, 1.0, 0.0, 1.0,
-    0.0, 0.0, 1.0, 1.0,
+    ...red,
+    ...yellow,
+    ...blue,
+    
     // Right face
-    1.0, 0.0, 0.0, 1.0,
-    0.0, 0.0, 1.0, 1.0,
-    0.0, 1.0, 0.0, 1.0,
+    ...red,
+    ...yellow,
+    ...blue,
+
     // left face
-    1.0, 0.0, 0.0, 1.0,
-    0.0, 1.0, 0.0, 1.0,
-    0.0, 0.0, 1.0, 1.0,
-    // buttom face
-    1.0, 0.0, 0.0, 1.0,
-    0.0, 1.0, 0.0, 1.0,
-    0.0, 0.0, 1.0, 1.0,    
+    ...red,
+    ...yellow,
+    ...blue,
+
+    // buttom face    
+    ...yellow,
+    ...yellow,
+    ...yellow,
+    // ...red,
+    // ...blue,
+    // ...yellow,
+    
+
+
   ];
 
   const colorBuffer = gl.createBuffer();
