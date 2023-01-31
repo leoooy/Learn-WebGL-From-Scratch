@@ -7,7 +7,7 @@ function initBuffers(gl) {
   return {
     position: positionBuffer,
     color: colorBuffer,
-    // indices: indexBuffer,
+    // indices: indexBuffer, 使用 drawArrays 绘制，暂时用不上索引数据
   };
 }
 
@@ -17,39 +17,6 @@ function initPositionBuffer(gl) {
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-  // 0,0,0
-  // 0,a,0
-  // sqrt(3)*a/2, a/2,0
-  // sqrt(3)*a/6, a/2,sqrt(6)*a/3
-
-  // 0,0,0
-  // 0,1,0
-  // sqrt(3)*/2, 1/2, 0
-  // sqrt(3)*/6, 1/2, sqrt(6)/3
-
-  // const positions = [
-  //   // Front face
-  //   0.0, 1.0, 0.0,
-  //   -1.0, -1.0, 1.0,
-  //   1.0, -1.0, 1.0,
-
-  //   // Right face
-  //   0.0, 1.0, 0.0,
-  //   1.0, -1.0, 1.0,
-  //   0.0, -1.0, -1.0,
-
-  //   // left face
-  //   0.0, 1.0, 0.0,
-  //   0.0, -1.0, -1.0,
-  //   -1.0, -1.0, 1.0,
-
-  //   // buttom face
-  //   0.0, -1.0, -1.0,    
-  //   1.0, -1.0, 1.0,
-  //   -1.0, -1.0, 1.0,    
-  // ];
-
-  const sqrt3 = Math.sqrt(3);
   const sqrt = Math.sqrt;
 
   const top = [0.0, 2 * sqrt(6) / 3, 0.0];

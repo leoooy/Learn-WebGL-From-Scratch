@@ -3,10 +3,6 @@ import { getGlContext, clearScreen, initShaderProgram } from "./utils.js";
 import { fsSource, vsSource } from "./shaderSources.js";
 import { drawScene } from './draw-scene.js';
 
-
-let rotation = 0.0;
-let deltaTime = 0;
-
 main();
 
 function main() {
@@ -37,8 +33,10 @@ function main() {
   const buffers = initBuffers(gl);
 
   let then = 0;
+  let rotation = 0.0;
+  let deltaTime = 0;
 
-  // Draw the scene repeatedly
+  // 渲染主循环
   function render(now) {
     now *= 0.001; // convert to seconds
     deltaTime = now - then;
