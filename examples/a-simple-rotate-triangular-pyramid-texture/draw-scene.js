@@ -38,7 +38,7 @@ function modalViewOperation(rotation) {
   return modelViewMatrix;
 }
 
-function drawScene(gl, programInfo, buffers, rotation) {
+function drawScene(gl, programInfo, buffers, texture, rotation) {
   gl.clearColor(0.0, 0.0, 0.0, 1.0); // Clear to black, fully opaque
   gl.clearDepth(1.0); // Clear everything
   gl.enable(gl.DEPTH_TEST); // Enable depth testing
@@ -80,7 +80,8 @@ function drawScene(gl, programInfo, buffers, rotation) {
 
   // 定义如何从缓冲区 buffer 中取 位置 和 颜色 数据
   setPositionAttribute(gl, buffers, programInfo);
-  setColorAttribute(gl, buffers, programInfo);
+  // setColorAttribute(gl, buffers, programInfo);
+  setTextureAttribute(gl, buffers, programInfo);
 
   // 使用 main 函数中初始化好了的 program
   gl.useProgram(programInfo.program);
@@ -96,6 +97,15 @@ function drawScene(gl, programInfo, buffers, rotation) {
     false,
     modelViewMatrix
   );
+
+    // Tell WebGL we want to affect texture unit 0
+    gl.activeTexture(gl.TEXTURE0);
+
+    // Bind the texture to texture unit 0
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+  
+    // Tell the shader we bound the texture to texture unit 0
+    gl.uniform1i(programInfo.uniformLocations.uSampler, 0);
 
   gl.drawArrays(gl.TRIANGLES, 0, 3 * 4); // 使用 drawArrays 绘制每个面的顶点都需要绘制一遍，即每个面 3个顶点*4个面
 
@@ -140,4 +150,21 @@ function setColorAttribute(gl, buffers, programInfo) {
   gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor);
 }
 
+function setTextureAttribute(gl, buffers, programInfo) {
+  const num = 2; // every coordinate composed of 2 values
+  const type = gl.FLOAT; // the data in the buffer is 32-bit float
+  const normalize = false; // don't normalize
+  const stride = 0; // how many bytes to get from one set to the next
+  const offset = 0; // how many bytes inside the buffer to start from
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.textureCoord);
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.textureCoord,
+    num,
+    type,
+    normalize,
+    stride,
+    offset
+  );
+  gl.enableVertexAttribArray(programInfo.attribLocations.textureCoord);
+}
 export { drawScene };
