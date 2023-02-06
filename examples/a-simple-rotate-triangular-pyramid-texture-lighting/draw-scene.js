@@ -78,24 +78,36 @@ function drawScene(gl, programInfo, buffers, texture, rotation) {
   // 模型变换矩阵
   const modelViewMatrix = modalViewOperation(rotation);
 
+  const normalMatrix = mat4.create();
+  mat4.invert(normalMatrix, modelViewMatrix);
+  mat4.transpose(normalMatrix, normalMatrix);
+  
   // 定义如何从缓冲区 buffer 中取 位置 和 颜色 数据
   setPositionAttribute(gl, buffers, programInfo);
   // setColorAttribute(gl, buffers, programInfo);
   setTextureAttribute(gl, buffers, programInfo);
+  setNormalAttribute(gl, buffers, programInfo);
 
   // 使用 main 函数中初始化好了的 program
   gl.useProgram(programInfo.program);
-
-  // 设置模型变换和投影变换矩阵到着色器变量中
+  
+  // 投影变换
   gl.uniformMatrix4fv(
     programInfo.uniformLocations.projectionMatrix,
     false,
     viewProjectionMatrix
   );
+  // 模型变换
   gl.uniformMatrix4fv(
     programInfo.uniformLocations.modelViewMatrix,
     false,
     modelViewMatrix
+  );  
+  // 法线矩阵
+  gl.uniformMatrix4fv(
+    programInfo.uniformLocations.normalMatrix,
+    false,
+    normalMatrix
   );
 
     // Tell WebGL we want to affect texture unit 0
@@ -167,4 +179,23 @@ function setTextureAttribute(gl, buffers, programInfo) {
   );
   gl.enableVertexAttribArray(programInfo.attribLocations.textureCoord);
 }
+
+function setNormalAttribute(gl, buffers, programInfo) {
+  const numComponents = 3;
+  const type = gl.FLOAT;
+  const normalize = false;
+  const stride = 0;
+  const offset = 0;
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.normal);
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.vertexNormal,
+    numComponents,
+    type,
+    normalize,
+    stride,
+    offset
+  );
+  gl.enableVertexAttribArray(programInfo.attribLocations.vertexNormal);
+}
+
 export { drawScene };
