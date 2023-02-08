@@ -20,7 +20,7 @@ export function getGlContext(selector) {
 // 清空屏幕
 export function clearScreen(gl) {
   // Set clear color to black, fully opaque
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  gl.clearColor(0.0, 0.1, 0.0, 1.0);
   // Clear the color buffer with specified clear color
   gl.clear(gl.COLOR_BUFFER_BIT);
 }
@@ -151,4 +151,43 @@ export function loadTexture(gl, url) {
 
 export function isPowerOf2(value) {
   return (value & (value - 1)) === 0;
+}
+
+
+export function lookAt(cameraPosition, target, up, dst) {
+  dst = dst || new Float32Array(16);
+
+  let zAxis = vec3.create();
+  vec3.subtract(zAxis, cameraPosition, target);
+  vec3.normalize(zAxis, zAxis);
+  zAxis= [...zAxis]
+
+  let xAxis = vec3.create();
+  vec3.cross(xAxis, up, zAxis);
+  vec3.normalize(xAxis, xAxis);
+  xAxis= [...xAxis]
+
+  let yAxis = vec3.create();
+  vec3.cross(yAxis, zAxis, xAxis);
+  vec3.normalize(yAxis, yAxis);
+  yAxis= [...yAxis]
+  
+  dst[0] = xAxis[0];
+  dst[1] = xAxis[1];
+  dst[2] = xAxis[2];
+  dst[3] = 0;
+  dst[4] = yAxis[0];
+  dst[5] = yAxis[1];
+  dst[6] = yAxis[2];
+  dst[7] = 0;
+  dst[8] = zAxis[0];
+  dst[9] = zAxis[1];
+  dst[10] = zAxis[2];
+  dst[11] = 0;
+  dst[12] = cameraPosition[0];
+  dst[13] = cameraPosition[1];
+  dst[14] = cameraPosition[2];
+  dst[15] = 1;
+
+  return dst;
 }

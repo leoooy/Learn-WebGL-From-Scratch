@@ -23,9 +23,19 @@ function main() {
       vertexPosition: gl.getAttribLocation(shaderProgram, "aVertexPosition"),
       vertexNormal: gl.getAttribLocation(shaderProgram, "aVertexNormal"),
       textureCoord: gl.getAttribLocation(shaderProgram, "aTextureCoord"),
+
     },
     uniformLocations: {
-      projectionMatrix: gl.getUniformLocation(shaderProgram, "uProjectionMatrix"),
+      worldViewProjection: gl.getUniformLocation(shaderProgram, "u_worldViewProjection"),
+      worldInverseTranspose: gl.getUniformLocation(shaderProgram, "u_worldInverseTranspose"),
+
+      // 光照位置
+      lightWorldPosition: gl.getUniformLocation(shaderProgram, "u_lightWorldPosition"),
+      viewWorldPosition: gl.getUniformLocation(shaderProgram, "u_viewWorldPosition"),
+      world: gl.getUniformLocation(shaderProgram, "u_world"),
+      // 高光
+      shininess: gl.getUniformLocation(shaderProgram, "u_shininess"),
+
       modelViewMatrix: gl.getUniformLocation(shaderProgram, "uModelViewMatrix"),
       normalMatrix: gl.getUniformLocation(shaderProgram, "uNormalMatrix"),
       uSampler: gl.getUniformLocation(shaderProgram, "uSampler"),

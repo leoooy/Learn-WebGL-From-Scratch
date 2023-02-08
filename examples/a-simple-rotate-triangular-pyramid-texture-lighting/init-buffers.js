@@ -138,22 +138,16 @@ function initTextureBuffer(gl) {
   const textureCoordBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, textureCoordBuffer);
 
+  // 为顶点指定纹理坐标
   const textureCoordinates = [
-    // Front
-    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
+    // Front    
+    1, 1, 0, 1, 1, 0,
     // Right
-    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
+    1, 1, 0, 1, 1, 0,
     // Left
-    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
-
-    // Back
-    // 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
-    // Top
-    // 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
-
+    1, 1, 0, 1, 1, 0,
     // Bottom
-    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
-
+    1, 1, 0, 1, 1, 0,
   ];
 
   gl.bufferData(
