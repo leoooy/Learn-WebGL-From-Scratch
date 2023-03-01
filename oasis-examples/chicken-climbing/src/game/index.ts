@@ -10,7 +10,8 @@ import {
 } from 'oasis-engine';
 import { OrbitControl } from '@oasis-engine-toolkit/controls';
 import { context } from './context';
-import { chicken } from './chicken';
+import { initChicken } from './chicken';
+import { initStairs } from './stairs';
 
 export function createOasis() {
   const engine = new WebGLEngine('canvas');
@@ -23,7 +24,7 @@ export function createOasis() {
   // init camera
   const cameraEntity = rootEntity.createChild('camera');
   cameraEntity.addComponent(Camera);
-  cameraEntity.transform.setPosition(10, 10, 10);
+  cameraEntity.transform.setPosition(0, 8, 15);
   cameraEntity.transform.lookAt(new Vector3(0, 0, 0));
   cameraEntity.addComponent(OrbitControl);
 
@@ -32,7 +33,7 @@ export function createOasis() {
   scene.ambientLight.diffuseIntensity = 1.2;
 
   // init duck
-  chicken();
-  
+  initChicken();
+  initStairs();
   engine.run();
 }
