@@ -17,7 +17,7 @@ import { LitePhysics } from '@oasis-engine/physics-lite';
 import { PhysXPhysics } from '@oasis-engine/physics-physx';
 
 import { WireframeManager } from '@oasis-engine-toolkit/auxiliary-lines';
-import pane, { data, field } from './controls';
+import pane, { paneData, field } from './controls';
 
 class KeyScript extends Script {
   onUpdate() {
@@ -62,7 +62,7 @@ export async function createOasis() {
 
   // init light
   scene.ambientLight.diffuseSolidColor.set(1, 1, 1, 1);
-  scene.ambientLight.diffuseIntensity = data.diffuseIntensity;
+  scene.ambientLight.diffuseIntensity = paneData.diffuseIntensity;
 
   // init duck
   initChicken();

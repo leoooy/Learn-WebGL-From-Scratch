@@ -9,7 +9,7 @@ import { context } from './context';
 
 import { Script, Vector3 } from 'oasis-engine';
 import { GlTFCollider } from './scripts/GLTFCollider';
-import { animationControl, data } from './controls';
+import { animationControl, paneData } from './controls';
 
 export class Jump extends Script {
   flag = 0;
@@ -30,7 +30,7 @@ export async function initChicken() {
   // 将小鸡添加到场景中
   chicken.transform.translate(0, 1, 0);
   context.rootEntity.addChild(chicken);
-  chicken.addComponent(Jump);
+  // chicken.addComponent(Jump);
 
   // 播放动画
   const animation = chicken.getComponent(Animator);
@@ -44,7 +44,7 @@ export async function initChicken() {
     animation.play(ev.value);
   });
 
-  animation.play(data.animation);
+  animation.play(paneData.chickenAnimation);
 
   // const radius = 1.25;
   // const physicsSphere = new SphereColliderShape();

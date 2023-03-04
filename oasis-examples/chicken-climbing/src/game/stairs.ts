@@ -3,18 +3,28 @@ import { context } from './context';
 
 import { Script, Vector3 } from 'oasis-engine';
 import { GlTFCollider } from './scripts/GLTFCollider';
+import { gameStart } from './controls';
 
+const stairStartPosition = new Vector3(0, -3, 3);
 export class StairsMovement extends Script {
+  onStart(): void {
+    console.log('this', this);
+  }
   onUpdate() {
-    // console.log(this.entity.transform.position);
-    // if ( > 54) {
-    // this.entity.transform.position = new Vector3(0, 0, 0);
-    // } else {
-    // if (context.controls.start) {
-    this.entity.transform.translate(new Vector3(0, -0.021, 0.05), true);
-    // }
+    // console.log(
+    //   this.entity.transform.position,
+    //   this.entity.transform.worldPosition
+    // );
 
-    // }
+    if (!context.controls.gameStart) return;
+
+    // 如何让场景无限循环下去？
+    // 创建两块草地，以一个给定的速率向 X 轴负方向移动，在视野内消失后拼接到右边，参考：https://oasisengine.cn/#/docs/latest/cn/first-game
+    if (this.entity.transform.worldPosition.z < 40) {
+      this.entity.transform.translate(new Vector3(0, -0.021, 0.05));
+    } else {
+      this.entity.transform.position = stairStartPosition;
+    }
   }
 }
 
@@ -26,18 +36,15 @@ export async function initStairs() {
 
   console.log('stairs', gltf);
 
-  // 将小鸡添加到场景中
+  // 将梯子添加到场景中
   context.rootEntity.addChild(stairs);
 
-  //
+  stairs.transform.translate(stairStartPosition);
   entities.forEach((el) => {
     if (/stair/.test(el.name)) return;
     el.addComponent(GlTFCollider);
-    // onTriggerEnter
   });
-  // const gltfCollider = stairs.addComponent(GlTFCollider);
-  //
-  const animation = stairs.getComponent(Animator);
+  // const animation = stairs.getComponent(Animator);
 
   // Add Script
   stairs.addComponent(StairsMovement);
