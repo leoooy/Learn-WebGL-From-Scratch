@@ -1,7 +1,15 @@
-import { Animator, GLTFResource } from 'oasis-engine';
+import {
+  Animator,
+  DynamicCollider,
+  GLTFResource,
+  MeshRenderer,
+  SphereColliderShape,
+} from 'oasis-engine';
 import { context } from './context';
 
 import { Script, Vector3 } from 'oasis-engine';
+import { GlTFCollider } from './scripts/GLTFCollider';
+import { animationControl, data } from './controls';
 
 export class Jump extends Script {
   flag = 0;
@@ -9,9 +17,6 @@ export class Jump extends Script {
     const jump = this.flag % 100 > 50;
     this.entity.transform.translate(new Vector3(0, jump ? 0.01 : -0.01, 0));
     this.flag++;
-    // this.entity.transform.rotate(this.roatate_x);
-    // this.entity.transform.rotate(this.roatate_y);
-    // this.entity.transform.rotate(this.roatate_z);
   }
 }
 
@@ -23,15 +28,37 @@ export async function initChicken() {
 
   // chicken
   // 将小鸡添加到场景中
-  chicken.transform.translate(0, 2, 0);
+  chicken.transform.translate(0, 1, 0);
   context.rootEntity.addChild(chicken);
   chicken.addComponent(Jump);
 
   // 播放动画
   const animation = chicken.getComponent(Animator);
 
-  console.log(animations);
-  animation.play('-3038@jump_b');
+  // 网格
+  const meshRenderer = chicken.addComponent(MeshRenderer);
+
+  console.log(gltf);
+  
+  animationControl.on('change', (ev) => {
+    animation.play(ev.value);
+  });
+
+  animation.play(data.animation);
+
+  // const radius = 1.25;
+  // const physicsSphere = new SphereColliderShape();
+  // physicsSphere.radius = radius;
+  // physicsSphere.material.staticFriction = 0.1;
+  // physicsSphere.material.dynamicFriction = 0.2;
+  // physicsSphere.material.bounciness = 1;
+
+  // const gltfCollider = chicken.addComponent(GlTFCollider);
+  // gltfCollider.isKinematic = true;
+
+  // const sphereCollider = chicken.addComponent(DynamicCollider);
+  // sphereCollider.isKinematic = true;
+  // sphereCollider.addShape(physicsSphere);
 
   // Add Script
   // chicken.addComponent(Rotate);

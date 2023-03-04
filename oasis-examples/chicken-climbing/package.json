@@ -7,12 +7,19 @@
 		"serve": "vite preview"
 	},
 	"dependencies": {
+		"@oasis-engine-toolkit/auxiliary-lines": "^0.8.1",
 		"@oasis-engine-toolkit/controls": "^0.8.1",
+		"@oasis-engine/physics-lite": "^0.8.3",
+		"@oasis-engine/physics-physx": "^0.8.3",
+		"dat.gui": "^0.7.9",
+		"leva": "^0.9.34",
 		"oasis-engine": "^0.8.2",
 		"react": "^17.0.0",
-		"react-dom": "^17.0.0"
+		"react-dom": "^17.0.0",
+		"tweakpane": "^3.1.6"
 	},
 	"devDependencies": {
+		"@tweakpane/core": "^1.1.5",
 		"@types/react": "^17.0.0",
 		"@types/react-dom": "^17.0.0",
 		"@vitejs/plugin-react-refresh": "^1.1.0",
