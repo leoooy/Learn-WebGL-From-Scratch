@@ -19,4 +19,12 @@ export const gameStart = pane
     context.controls.gameStart = ev.value;
   });
 
+export const chickenCollider = {
+  radius: 1,
+};
+const chicken = pane.addFolder({
+  title: 'chicken',
+});
+chicken.addInput(chickenCollider, 'radius');
+
 export default pane;

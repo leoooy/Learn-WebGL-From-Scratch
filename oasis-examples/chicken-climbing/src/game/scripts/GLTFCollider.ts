@@ -23,21 +23,24 @@ export class GlTFCollider extends Script {
     const worldPosition = new Vector3();
     const worldSize = new Vector3();
     const worldMatrix = new Matrix();
+
     // Calculate the position and size of the collider.
     boundingBox.getCenter(worldPosition);
     Vector3.subtract(boundingBox.max, boundingBox.min, worldSize);
+
     // Add entity and calculate the world matrix of the collider.
     const boxEntity = entity.createChild('box');
     boxEntity.transform.worldMatrix = worldMatrix.translate(worldPosition);
+
     // Add collider.
     const boxCollider = boxEntity.addComponent(StaticCollider);
     const boxColliderShape = new BoxColliderShape();
     boxColliderShape.setSize(worldSize.x, worldSize.y, worldSize.z);
     boxCollider.addShape(boxColliderShape);
+    boxColliderShape.isTrigger = true;
+    boxCollider.name = this.entity.name;
+
     context.wireframe.addCollideWireframe(boxCollider);
     this.collider = boxCollider;
-  }
-  onTriggerEnter(other: ColliderShape): void {
-    console.log('onTriggerEnter', other);
   }
 }

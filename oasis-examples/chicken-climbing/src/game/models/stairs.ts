@@ -1,27 +1,23 @@
 import { Animator, GLTFResource } from 'oasis-engine';
-import { context } from './context';
+import { context } from '../context';
 
 import { Script, Vector3 } from 'oasis-engine';
-import { GlTFCollider } from './scripts/GLTFCollider';
-import { gameStart } from './controls';
+import { GlTFCollider } from '../scripts/GLTFCollider';
+import { gameStart } from '../controls';
 
 const stairStartPosition = new Vector3(0, -3, 3);
+
 export class StairsMovement extends Script {
   onStart(): void {
     console.log('this', this);
   }
-  onUpdate() {
-    // console.log(
-    //   this.entity.transform.position,
-    //   this.entity.transform.worldPosition
-    // );
-
+  onPhysicsUpdate() {
     if (!context.controls.gameStart) return;
 
     // 如何让场景无限循环下去？
     // 创建两块草地，以一个给定的速率向 X 轴负方向移动，在视野内消失后拼接到右边，参考：https://oasisengine.cn/#/docs/latest/cn/first-game
     if (this.entity.transform.worldPosition.z < 40) {
-      this.entity.transform.translate(new Vector3(0, -0.021, 0.05));
+      this.entity.transform.translate(new Vector3(0, -0.04, 0.1));
     } else {
       this.entity.transform.position = stairStartPosition;
     }

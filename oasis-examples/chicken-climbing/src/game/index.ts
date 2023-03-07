@@ -8,11 +8,12 @@ import {
   Script,
   GLTFResource,
   Keys,
+  PointLight,
 } from 'oasis-engine';
 import { OrbitControl } from '@oasis-engine-toolkit/controls';
 import { context } from './context';
-import { initChicken } from './chicken';
-import { initStairs } from './stairs';
+import { initChicken } from './models/chicken';
+import { initStairs } from './models/stairs';
 import { LitePhysics } from '@oasis-engine/physics-lite';
 import { PhysXPhysics } from '@oasis-engine/physics-physx';
 
@@ -62,7 +63,11 @@ export async function createOasis() {
 
   // init light
   scene.ambientLight.diffuseSolidColor.set(1, 1, 1, 1);
-  scene.ambientLight.diffuseIntensity = paneData.diffuseIntensity;
+  scene.ambientLight.diffuseIntensity = 1.2;
+  
+  const light = rootEntity.createChild("light");
+  light.transform.setPosition(0, 3, 0);
+  light.addComponent(PointLight);
 
   // init duck
   initChicken();
